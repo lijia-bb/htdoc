@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script type="text/javascript" src="../../Ajax/$ajax.js"></script>
+	</head>
+	<body>
+		<button type="button" id="btn">获取数据</button>
+		<script type="text/javascript">
+			var obtn=document.getElementById('btn')
+			function show(response){
+				console.log(response)
+				response=JSON.parse(response)
+				for(let key in response){
+						document.body.innerHTML+='标题：'+response[key].title+' 时间：'+response[key].date+'<br/>'
+				}
+			}
+			obtn.onclick=function(){
+				$ajax({
+					method:'get',
+					url:'news.php',
+					success:show,
+					error:function(msg){
+						console.log(msg)
+					}
+				})
+			}
+		</script>
+	</body>
+</html>

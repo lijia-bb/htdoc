@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="./boostrap/bootstrap.css"/>
+		<script src="$ajax.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div class="container">
+			<!-- <form method="post" action="addEmp.php">
+				<div>姓名：<input type="text" name="name"></div>
+				<div>薪资：<input type="text" name="salary"  /></div>
+				<div>性别：<input type="text" name="sex" /></div>
+				<div>职位：<input type="text" name="position"/></div>
+				<a href="getEmp.html"><input type="submit" value="添加员工信息"></a>
+				<a href=""></a>
+			</form> -->
+			<div>姓名：<input type="text" name="name"></div>
+			<div>薪资：<input type="text" name="salary"  /></div>
+			<div>性别：<input type="text" name="sex" /></div>
+			<div>职位：<input type="text" name="position"/></div>
+			<button type="button"><a href="getEmp.html">查看员工信息</a></button> 
+			<button type="submit" id="submit">添加信息</button>
+			<script type="text/javascript">
+				var obtn=document.getElementById('submit')
+				var aIn=document.getElementsByTagName('input');
+				obtn.onclick=function(){
+					$ajax({
+						url:'addEmp.php',
+						method:'post',
+						data:{
+							name:aIn[0].value,
+							salary:aIn[1].value,
+							sex:aIn[2].value,
+							position:aIn[3].value
+						},
+						success:function(response){
+							console.log(JSON.parse(response))
+						},
+						error:function(res){
+							console.log(res)
+						}
+					})
+				}
+				
+			</script>
+		</div>
+	</body>
+</html>

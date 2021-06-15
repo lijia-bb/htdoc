@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="$ajax.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<button type="button"id='btn'>传输</button>
+		<p id="pp">  </p>
+	</body>
+	<script type="text/javascript">
+		var obtn=document.getElementById('btn')
+		var opp=document.getElementById('pp')
+		function showget(response){
+			opp.innerText+='GET传输成功'
+			console.log(response)
+		}
+		function showpost(response){
+			opp.innerText+='POST传输成功'
+		}
+		obtn.onclick=function(){
+			
+			$ajax({
+				url:'localhost/Mysql/show.php',
+				success:showget,
+				error:function(res){
+					console.log(res)
+				}
+			})
+			$ajax({
+				url:'GET_POST/post.php',
+				method:'post',
+				data:{
+					username:'post',
+					age:20,
+					password:'789'
+				},
+				success:showpost,
+				error:function(res){
+					console.log(res)
+				}
+			})
+			
+		}
+	</script>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="bootstrap.css"/>
+		<style type="text/css">
+			
+			.container{
+				text-align: center;
+				padding-top: 200px;
+			}
+			#txt{
+				width: 200px;
+				height: 30px;
+				border: 1px solid gold;
+			}
+			#show{
+				width: 200px;
+				border: 1px solid lightgray;
+				margin: 0 auto;
+				display: none;
+				color: gray;
+			}
+			ul{
+				padding: 0;
+				margin: 0;
+			}
+			li{
+				list-style: none;
+				text-align: start;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<input type="text" id="txt" placeholder="请输入搜索的内容"/>
+			<div id="show">
+				
+			</div>
+		</div>
+		
+		<script type="text/javascript">
+			let ote=document.getElementById('txt');
+			let osh=document.getElementById('show')
+			function show(data){
+				console.log(data.s)
+				osh.innerHTML=''
+				let newnode=document.createElement('ul');
+				data.s.forEach((item)=>{
+					newnode.innerHTML+=`<li>${item}</li>`
+				})
+				osh.appendChild(newnode)
+			}
+			ote.onkeyup=function(){
+				document.body.removeChild(document.body.lastChild)
+				if(ote.value){
+					osh.style.display='block';
+					let newnode=document.createElement('script');
+					newnode.src=`https://suggestion.baidu.com/su?wd=${ote.value}&cb=show`;
+					document.body.appendChild(newnode)
+				}else{
+					osh.style.display='none'
+				}
+			}
+		</script>
+	</body>
+</html>

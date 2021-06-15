@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="$ajax.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="../boostrap/bootstrap.css" />
+		<style type="text/css">
+			.container {
+				font-size: 20px;
+				position: relative;
+			}
+
+			h1 {
+				text-align: center;
+			}
+
+			input {
+				margin: 10px;
+				border: 0px;
+			}
+
+			button {
+				margin: 5px;
+			}
+
+			#update {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				background-color: rgba(255, 255, 255, 0.5);
+				left: 0;
+				top: 0;
+				display: none;
+			}
+
+			#up {
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				background-color: cornflowerblue;
+				transform: translate(-50%, -50%);
+				font-size: 30px;
+			}
+
+			#close {
+				position: absolute;
+				right: 0;
+				top: 0;
+				width: 50px;
+				height: 50px;
+				text-align: center;
+				line-height: center;
+				background-color: white;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<h1>用户列表</h1>
+			<table class="table table-success" border="" cellspacing="" cellpadding="" id="tb">
+			</table>
+			<div id="update">
+				<div id="up">
+					<h1>更新页面</h1>
+					<div id="main">
+						用户名: <input type="text" id="username" /> <br />
+						密码&nbsp;&nbsp;&nbsp;: <input type="password" id="pass"><br />
+						<button type="button" id="obtn">提交</button>
+					</div>
+					<div id="close">
+						X
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+			let otb = document.getElementById('tb');
+			let ocl = document.getElementById('close');
+			let oup = document.getElementById('update')
+			let pass = document.getElementById('pass');
+			let name = document.getElementById('username');
+			let obtn = document.getElementById('obtn')
+			let username = ''
+			let password = null;
+			let id = 0
+			/* 展示 */
+			function show() {
+				$ajax({
+					url: 'userList.php',
+					success: function(res) {
+						let Lstr = '<tr><th>ID</th><th>用户名</th><th>密码</th><th>创建时间</th><th>操作</th></tr>'
+						var arr = JSON.parse(res);
+						arr.forEach(item => {
+							var str = ''
+							for (let key in item) {
+								if (key == 'create_time') {
+									timer = new Date(parseInt(item[key]))
+									date = timer.toLocaleDateString() + '/' + timer.toLocaleTimeString();
+									str += `<td>${date}</td>`
+								} else {
+									str += `<td>${item[key]}</td>`
+								}
+							}
+							str += '<td><button>删除</button><button>修改</button></td>'
+							Lstr += `<tr>${str}</tr>`
+						})
+						otb.innerHTML += Lstr;
+					}
+				})
+			}
+			show()
+			/* 删除和修改 */
+			otb.onclick = function(ev) {
+				/* 浏览器兼容 */
+				let e=ev||window.event;
+				let target=e.target||e.srcElement;
+				id = target.parentNode.parentNode.firstChild.innerText;
+				username = target.parentNode.parentNode.childNodes[1].innerText;
+				password = target.parentNode.parentNode.childNodes[2].innerText;
+				/* 删除 */
+				if (e.target.innerText == '删除') {
+					$ajax({
+						url: 'del.php',
+						data: {
+							id,
+						},
+						success: function(res) {
+							otb.innerHTML = '';
+							let Lstr = '<tr><th>ID</th><th>用户名</th><th>密码</th><th>创建时间</th><th>操作</th></tr>'
+							show();
+						}
+					})
+				}
+				/* 修改 */
+				if (e.target.innerText == '修改') {
+					oup.style.display = 'block';
+					pass.value = password;
+					name.value = username;
+				}
+			}
+			/* 关闭弹窗 */
+			ocl.onclick = function() {
+				oup.style.display = 'none';
+				oup.style.display = 'none';
+				otb.innerHTML = '';
+				let Lstr = '<tr><th>ID</th><th>用户名</th><th>密码</th><th>创建时间</th><th>操作</th></tr>'
+				show();
+			}
+			/* 提交 */
+			obtn.onclick = function() {
+				$ajax({
+					url: 'update.php',
+					data: {
+						id,
+						username: name.value,
+						password: pass.value,
+						create_time: (new Date).getTime(),
+					},
+					success: function(res) {
+						alert(JSON.parse(res).message);
+
+					},
+					error: function(err) {
+						console.log(res);
+					}
+				})
+			}
+		</script>
+	</body>
+</html>

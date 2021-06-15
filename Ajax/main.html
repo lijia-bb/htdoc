@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script type="text/javascript">
+			window.onload=function(){
+				var oBtn=document.getElementById('btn1')
+				oBtn.onclick=function(){
+					/* 1.创建ajax对象 */
+					var xhr=null;
+					try{
+						xhr=new XMLHttpRequest();
+					}catch(error){
+						xhr=new ActiveXObject('Microsoft.XMLHTTP')
+					}
+					/* 2.调用open */
+					xhr.open('GET','GET_POST/get.php?username=dog&password=123456&age=18' ,'true')
+					
+					// xhr.open('POST','GET_POST/post.php' ,'true')
+					
+					/* 3.调用send 发送请求*/
+					xhr.send()
+					/* 设置post请求头的格式 */
+					// xhr.setRequestHeader('content-type','application/x-www-form-urlencoded')
+					// xhr.send('username=dog&password=123456&age=18')
+					
+					/* 4.等待数据响应 */
+					xhr.onreadystatechange=function(){
+						console.log(xhr.readyState)
+						/* 响应内容是否解析完成 */
+						if(xhr.readyState==4){
+							/* 判断数据请求是否成功 */
+							if(xhr.status==200){
+								console.log('请求成功：',xhr.responseText)
+							}else{
+								console.log('请求失败：',xhr.status)
+							}
+							
+						}
+					}
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<button type="button" id="btn1">下载数据</button>
+	</body>
+</html>

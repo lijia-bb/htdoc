@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<button type="button" id="obtn">获取</button>
+		<script type="text/javascript">
+			var oBtn=document.getElementById('obtn');
+			oBtn.onclick=function(){
+				var xhr= new XMLHttpRequest();
+				/* 请求豆瓣电影 */
+				xhr.open('GET','https://movie.douban.com/cinema/nowplaying/beijing/',true);
+				xhr.send();
+				xhr.onreadystatechange=function(){
+					if(xhr.readyState==4){
+						if(xhr.status==200){
+							console.log(xhr.responseText)
+						}
+					}
+				}
+			}
+		</script>
+	</body>
+</html>

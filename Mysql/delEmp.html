@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="$ajax.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<h1>修改员工信息</h1>
+		员工姓名:<input name=""/>
+		<button type="button" id="delete">删除员工信息</button>
+		<button type="button"><a href="getEmp.html">查看员工信息</a></button>
+		<script type="text/javascript">
+			var obtn=document.getElementById('delete');
+			var oIn=document.getElementsByTagName('input')[0];
+			obtn.onclick=function(){
+				$ajax({
+					url:'delEmp.php',
+					data:{
+						name:oIn.value,
+					},
+					success:function(res){
+						console.log(JSON.parse(res))
+					},
+					error:function(err){
+						console.log(JSON.parse(err))
+					}
+				})
+			}
+		</script>
+	</body>
+</html>

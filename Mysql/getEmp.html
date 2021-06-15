@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="./boostrap/bootstrap.css"/>
+		<script src="$ajax.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div class="container">
+			  <button id="get">获取员工信息</button>
+			  <button type="button"><a href="addEmp.html">新增员工信息</a></button>
+			  <button type="button"><a href="delEmp.html">删除员工信息</a></button>
+				<table class="table table-info">
+					<thead>
+						<tr>
+							<th >工号</th>
+							<th >姓名</th>
+							<th >性别</th>
+							<th >薪资</th>
+							<th >职位</th>
+						</tr>
+					</thead>
+					<tbody id="info">
+					</tbody>
+				</table>
+		</div>
+		
+		<script type="text/javascript">
+			let oTa=document.getElementById('info')
+			let oget=document.getElementById('get');
+			oget.onclick=function(){
+				$ajax({
+					url:'show_json.php',
+					success:function(response){
+						let res=JSON.parse(response);
+						for(let i=0;i<res.length;i++){
+							let newnode=document.createElement('tr')
+							for(let key in res[i]){
+								newnode.innerHTML+=`<td>${res[i][key]}</td>`
+							}
+							oTa.appendChild(newnode)
+						}
+						
+					}
+				})
+			}
+		</script>
+	</body>
+</html>

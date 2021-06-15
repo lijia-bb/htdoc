@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		
+	</head>
+	<body>
+		<button type="button" id="btn">下载数据</button>
+		<!-- <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2496571732,442429806&fm=26&gp=0.jpg" > -->
+		<script type="text/javascript">
+			var obtn=document.getElementById('btn')
+			console.log(new Date)
+			function download(date){
+				console.log(date)
+			}
+			obtn.onclick=function(){
+				var newnode=document.createElement('script');
+				newnode.src='1.jstxt';
+				document.body.appendChild(newnode);
+				console.log(new Date)
+			}
+		</script>
+		<!-- <script src="1.js" ></script> -->
+	</body>
+</html>

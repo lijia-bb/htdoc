@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="$ajax.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			a{
+				text-decoration: none;
+				color: black;
+			}
+			.main{
+				font-size: 30px;
+			}
+			.container{
+				text-align: center;
+			}
+			input{
+				margin: 20px;
+				height: 50px;
+				font-size: 30px;
+			}
+			button{
+				margin: 10px;
+				font-size: 30px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<h1>登录页面</h1>
+					<div class="main">
+						用户名：<input type="text" id="username"/> <br />
+						密码&nbsp;&nbsp;&nbsp;&nbsp;: <input type="password" id="pass" ><br />
+						<button type="button" id="obtn">登录</button>
+						<button type="button"><a href="sign.html">注册</a></button>
+					</div>
+		</div>
+		
+		<script>
+			let obtn=document.getElementById('obtn');
+			let name=document.getElementById('username');
+			let pass=document.getElementById('pass');
+			obtn.onclick=function(){
+				$ajax({
+					url:'login.php',
+					data:{
+						username:name.value,
+						password:pass.value,
+					},
+					success:function(res){
+						alert(JSON.parse(res).message);
+					},
+					error:function(err){
+						console.log(res);
+					}
+				})
+			}
+		</script>
+	</body>
+</html>
